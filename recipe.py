@@ -1,5 +1,4 @@
 import streamlit as st
-import cv2
 import numpy as np
 from sklearn.cluster import KMeans
 import webcolors
@@ -159,7 +158,7 @@ COMMON_CSS3_COLORS = {
 # Function to extract colors from an image
 def extract_dominant_colors(image, n_colors=3):
     # Convert image to RGB
-    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image_rgb = image[:, :, ::-1]
     #Reshape image to pixels
     pixels = image_rgb.reshape(-1, 3)
     # Apply KMeans clustering
@@ -239,7 +238,7 @@ if uploaded_file is not None:
     # Read image
     image= Image.open(uploaded_file)
     image_np = np.array(image)
-    image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+    image_cv = image_np[:, :, ::-1]
 
     #Display uploaded image
     st.image(image, caption='Uploaded Image', use_column_width=True)
